@@ -1,0 +1,11 @@
+.container-cards{
+    display:flex;
+    padding: 2rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+h1,h2{
+    text-align: center;
+    margin: 1rem;
+}
