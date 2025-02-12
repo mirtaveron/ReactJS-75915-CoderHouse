@@ -2,7 +2,6 @@ import './CartWidget.css';
 import { IconButton, Badge } from "@mui/material";
 import CartIcon from '@mui/icons-material/ShoppingCartOutlined';
 
-
 function CartWidget(){
 
     return(

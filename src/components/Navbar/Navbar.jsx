@@ -4,7 +4,6 @@ import { IconButton } from "@mui/material";
 import Home from '@mui/icons-material/HomeOutlined';
 import Products from '@mui/icons-material/StoreOutlined';
 import Contact from '@mui/icons-material/ContactPhoneOutlined';
-
 import CartWidget from '../CartWidget/CartWidget';
 
 function Navbar(){
