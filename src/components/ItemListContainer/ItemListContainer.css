@@ -1,0 +1,13 @@
+.container-cards{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+h1,h2{
+    text-align: center;
+    margin: 1rem;
+}
