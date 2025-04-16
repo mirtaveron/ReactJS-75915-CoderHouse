@@ -9,27 +9,60 @@
 
 **Pre-entrega Nº2:**
 
-  
-
-Implementa una herramienta de routing, la cual permitirá navegar a través de las diferentes vistas para tu tienda: catálogo principal de productos, catálogo de productos filtrados por categorías, y vista en detalle de un producto. Crea la funcionalidad necesaria para que los usuarios puedan:
-
-- Seleccionar desde el menú las distintas categorías disponibles.
-- Visualizar el listado, filtrando según esa elección.
-- Seleccionar un producto del listado y acceder a una vista en detalle del mismo, donde además contarán con una interfaz que posteriormente les permita agregar unidades al carrito.
-
-  
+**Entrega final: Web App de e-commerce**
+Desarrolla el Front End de una Single Page Application de e-commerce, utilizando React como herramienta base para crear las distintas piezas (componentes) de la interfaz de usuario (UI). Implementa los diferentes patrones y conceptos específicos de React, como el Virtual DOM y los hooks. Para la interacción entre las mismas, incorpora manejo de eventos, navegación entre componentes, y administración de datos globales (por ejemplo: el estado del carrito de compras). Como herramienta de estilado podrás utilizar de forma opcional CSS, SASS, o librerías de estilos (Bootstrap) o de componentes (Material UI). Podrás seleccionar una temática a elección, creando tu propio catálogo de productos, o utilizando herramientas generadoras de datos o "mock data".Implementa la conexión a un servicio en la nube (Firebase) que te provea de una Base de Datos donde almacenar el listado de tus productos, y te permita guardar registros de las compras realizadas por los usuarios del e-commerce.
 
 **Objetivos**
+- Desarrollar el front-end de una webapp de tipo e-commerce con React.
 
-- Implementar la funcionalidad de navegación entre las diferentes vistas utilizando enlaces y rutas.
-- Desarrollar la navegabilidad básica de la aplicación, permitiendo navegar desde el catálogo al detalle de cada item.
-
-  
+-Incorporar Firestore como base de datos.
 
 **Requisitos**
+**Listado y Detalle de productos**
+- Generación dinámica del listado de productos y acceso a la vista en detalle de cada uno (ItemListContainer y ItemDetailContainer)
+- Separación en componentes contenedores y de presentación para separar responsabilidad de tareas en los mismos. (ItemListContainer
+ItemList)
+- Implementación de componente ItemCount que permita seleccionar cantidad de unidades a agregar al carrito y realice las validaciones necesarias (valor mínimo, límite por stock, etc.)
+- Ocultar el componente ItemCount en ItemDetail luego de agregar un producto al carrito.
 
-- Implementación de React Router y creación de las distintas rutas necesarias para mostrar las vistas de nuestra app.
-- División entre componentes contenedores encargados de manejar el estado y los efectos (ItemListContainer, ItemDetailContainer) y componentes de presentación, encargados del apartado visual (estructura de elementos, estilos, classNames, etc.).
-- Los componentes contenedores harán un llamado asíncrono a "Promises" que resuelvan luego de un breve retardo los datos solicitados (listado de productos, un producto).
-- Uso del método Array.map() y la prop "key" para listar todos los productos en el catálogo.
-- Uso del hook useParams() de react router para leer el segmento actual de la URL y mostrar el contenido correspondiente.
+**Navegación**
+- Navegación entre las secciones de catálogo, categorías, detalle, carrito y checkout, utilizando React Router y mediante enlaces en el componente NavBar.
+
+- Navegación respetando el modelo Single Page App (sin que se generen recargas de la página del navegador)
+
+**Criterios de compras**
+- Almacenamiento del estado de carrito de compras mediante Context.
+- Mostrar el contenido del carrito dentro del componente Cart (productos, cantidades, subtotales, totales, etc.)
+- Mostrar un icono/imágen del carrito en el componente CartWidget. Debe mostrar el total de unidades agregadas al context
+
+**Firebase**
+- Implementación de Firestore como base de datos.
+- Creación de una colección donde se almacene la información de todos los productos del e-commerce, y realizar las consultas desde React para mostrarlos en la app.
+- Generación de un documento en Firestore al confirmar una compra, registrando los detalles de la misma.
+
+**Experiencia de usuario**
+- Utilizar renderizado condicional para mostrar loaders y mensajes condicionales, como “producto sin stock”, “carrito vacío”, etc.
+- Como finalización de la experiencia de usuario, brindarle al usuario el id (o detalles adicionales) de la orden generada en Firestore
+
+**Buenas prácticas y convenciones**
+- Respetar las convenciones y consignas del curso para los nombres de variables funciones, componentes. eventos, y arquitectura de carpetas/archivos.
+- Crear un documento en formato markdown documentando brevemente el proyecto
+
+**Estructura de Componentes recomendada**
+
+App
+- NavBar
+- - CartWidget
+
+- ItemListContainer
+- - ItemList
+- - - Item
+
+- ItemDetailContainer
+- - ItemDetail
+- - - ItemCount
+
+- Cart
+- - CartItem
+
+CheckoutForm
