@@ -6,8 +6,11 @@ import MaleIcon from '@mui/icons-material/MaleOutlined';
 import FemaleIcon from '@mui/icons-material/Female';
 import CartWidget from '../CartWidget/CartWidget';
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../../context/context';
 
 function Navbar(){
+
+    const context = useAppContext();
 
     return(
         <header>

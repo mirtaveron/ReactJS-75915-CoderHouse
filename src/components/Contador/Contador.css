@@ -1,0 +1,42 @@
+.contador-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #f4f4f4;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .btn-modify {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 1.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .btn-modify:disabled {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+  }
+  
+  #numero {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+    min-width: 2rem;
+    text-align: center;
+  }
+  

@@ -58,6 +58,12 @@
     margin: 20px 0;
 }
 
+.acciones {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 @media (max-width: 768px) {
     .card-detail {
         flex-direction: column; 

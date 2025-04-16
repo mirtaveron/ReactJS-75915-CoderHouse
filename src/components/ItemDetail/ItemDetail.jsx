@@ -5,15 +5,15 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getAPI } from '../../fetchData';
 import Loader from '../Loader/Loader';
+import { useAppContext } from '../../context/context';
+import Contador from '../Contador/Contador';
 
 function ItemDetail(){
 
     const {id} = useParams();
     const [detalle, setDetalle] = useState(null);
 
-    function agregarAlCarrito(){
-        console.log("Vas a agregar:", detalle.title);
-    }
+    const {agregarAlCarrito, contador, stockProductos, setStockProductos} = useAppContext();
 
     useEffect(() => {
         const url = "https://fakestoreapi.com/products";
@@ -21,9 +21,16 @@ function ItemDetail(){
             .then(response => {
                 const detalleDelProducto = response.find(el => el.id === parseInt(id));
                 setDetalle(detalleDelProducto);
+
+               // Inicializa el stock si no está
+                if (stockProductos[detalleDelProducto.id] === undefined) {
+                    const stockInicial = 10 + Number(String(detalleDelProducto.rating.count)[0]);
+                    setStockProductos(prev => ({ ...prev, [detalleDelProducto.id]: stockInicial }));
+                }
+                
             })
             .catch(err => console.error(err));
-    },[id]);
+    },[id]);            
 
     return(
         !detalle ? <Loader />
@@ -36,9 +43,27 @@ function ItemDetail(){
                 <div  className="price">${detalle.price || "-"}</div>        
                 <p>${detalle.description || "Sin descripción disponible"}</p>        
 
-                <Button variant="contained"  color="info"  onClick={()=>agregarAlCarrito()}>
-                    <AddCart />
-                </Button>
+
+                <div className="acciones">                    
+                    {                    
+                        stockProductos[detalle.id] > 0 ?
+                            <>
+                            <p>Quedan {stockProductos[detalle.id]} unidades</p>
+                            <Contador stock={stockProductos[detalle.id]} />
+                            </>
+                        :
+                            <p>Producto agotado!</p>
+                    }
+
+                    <Button
+                        disabled = {stockProductos[detalle.id]===0}
+                        variant="contained"
+                        color="info"
+                        onClick={()=>agregarAlCarrito({id: detalle.id, nombre: detalle.title, precio: detalle.price, cantidad: contador})}
+                        startIcon={<AddCart />}
+                    >                       
+                    </Button>
+                </div>
 
                 <Link to="/">
                     <Button variant="contained"  color="info"  >
