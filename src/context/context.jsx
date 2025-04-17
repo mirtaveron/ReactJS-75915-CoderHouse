@@ -30,7 +30,7 @@ export const ContextProvider = (props) => {
        // Actualiza el stock globalmente
         setStockProductos(prev => ({
             ...prev,
-            [producto.stock]: (prev[producto.stock] || producto.stockInicial) - producto.cantidad
+            [producto.id]: (prev[producto.id] ?? producto.stockInicial) - producto.cantidad
         }));
     }
 

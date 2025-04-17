@@ -13,7 +13,6 @@ function ItemDetail(){
 
     const {id} = useParams();
     const [detalle, setDetalle] = useState(null);
-
     const {agregarAlCarrito, contador, stockProductos, setStockProductos} = useAppContext();
 
     useEffect(() => {
@@ -48,9 +47,17 @@ function ItemDetail(){
 getItem();
     },[id]);            
 
+
+  // 💡 Verificamos que ya haya detalle antes de hacer cualquier cálculo
+  if (!detalle) return <Loader />;
+
+  // ✅ Ahora que estamos seguros de que 'detalle' no es null, podemos usarlo
+  const stockDisponible = stockProductos[detalle.id] ?? detalle.stock;
+
     return(
         !detalle ? <Loader />
         :
+        
         <div className='card-detail'>
             <img src={detalle.image} alt={detalle.title} />
 
@@ -60,21 +67,21 @@ getItem();
                 <p>${detalle.description || "Sin descripción disponible"}</p>        
 
                 <div className="acciones">                    
-                    {                    
-                        detalle.stock > 0 ?
+                    {                  
+                        stockDisponible > 0 ?
                             <>
-                            <p>Quedan {detalle.stock} unidades</p>
-                            <Contador stock={detalle.stock} />
+                            <p>Quedan {stockDisponible} unidades</p>
+                            <Contador stock={stockDisponible} />
                             </>
                         :
                             <p>Producto agotado!</p>
                     }
 
                     <Button
-                        disabled = {detalle.stock===0}
+                        disabled = {stockDisponible===0}
                         variant="contained"
                         color="info"
-                        onClick={()=>agregarAlCarrito({id: detalle.id, nombre: detalle.title, precio: detalle.price, cantidad: contador})}
+                        onClick={()=>agregarAlCarrito({id: detalle.id, nombre: detalle.title, precio: detalle.price, cantidad: contador, stockInicial: detalle.stock})}
                         startIcon={<AddCart />}
                     >                       
                     </Button>
