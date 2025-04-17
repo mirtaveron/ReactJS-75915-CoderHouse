@@ -17,12 +17,35 @@ function ItemDetail(){
     const {agregarAlCarrito, contador, stockProductos, setStockProductos} = useAppContext();
 
     useEffect(() => {
+        const getItem = async () => {
+            try {
+
         let refCollection = collection(db, "react-75915");
         let refDoc = doc(refCollection, id);
-        getDoc(refDoc).then(res => {
-            setDetalle({ id:res.id, ...res.data() });
 
-        })    
+        const snapshot = await getDoc(refDoc);
+
+        if (snapshot.exists()) {
+            const data = snapshot.data();
+            setDetalle({ id: snapshot.id, ...data });
+        } else {
+            setDetalle(null); // no existe ese producto
+        }
+
+
+        // getDoc(refDoc).then(res => {
+        //     setDetalle({ id:res.id, ...res.data() });
+        //     console.log(detalle.stock);
+        // })  
+    } catch (error) {
+        console.error("Error al obtener producto:", error);
+    } finally {
+        // setLoader(false);
+    }
+};
+
+
+getItem();
     },[id]);            
 
     return(
@@ -35,7 +58,6 @@ function ItemDetail(){
                 <h2>{detalle.title || "SIN STOCK"}</h2>
                 <div  className="price">${detalle.price || "-"}</div>        
                 <p>${detalle.description || "Sin descripción disponible"}</p>        
-
 
                 <div className="acciones">                    
                     {                    
