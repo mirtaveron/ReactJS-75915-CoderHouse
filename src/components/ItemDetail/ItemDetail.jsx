@@ -7,6 +7,8 @@ import { getAPI } from '../../fetchData';
 import Loader from '../Loader/Loader';
 import { useAppContext } from '../../context/context';
 import Contador from '../Contador/Contador';
+import { db } from "../../firebaseConfig";
+import { collection, getDoc, doc } from "firebase/firestore"; 
 
 function ItemDetail(){
 
@@ -16,20 +18,27 @@ function ItemDetail(){
     const {agregarAlCarrito, contador, stockProductos, setStockProductos} = useAppContext();
 
     useEffect(() => {
-        const url = "https://fakestoreapi.com/products";
-        getAPI(url)
-            .then(response => {
-                const detalleDelProducto = response.find(el => el.id === parseInt(id));
-                setDetalle(detalleDelProducto);
+        let refCollection = collection(db, "react-75915");
+        let refDoc = doc(refCollection, id);
+        getDoc(refDoc).then(res => {
+            setDetalle({ id:res.id, ...res.data() });
 
-               // Inicializa el stock si no está
-                if (stockProductos[detalleDelProducto.id] === undefined) {
-                    const stockInicial = 10 + Number(String(detalleDelProducto.rating.count)[0]);
-                    setStockProductos(prev => ({ ...prev, [detalleDelProducto.id]: stockInicial }));
-                }
+        })
+
+        // const url = "https://fakestoreapi.com/products";
+        // getAPI(url)
+        //     .then(response => {
+        //         const detalleDelProducto = response.find(el => el.id === parseInt(id));
+        //         setDetalle(detalleDelProducto);
+
+        //        // Inicializa el stock si no está
+        //         if (stockProductos[detalleDelProducto.id] === undefined) {
+        //             const stockInicial = 10 + Number(String(detalleDelProducto.rating.count)[0]);
+        //             setStockProductos(prev => ({ ...prev, [detalleDelProducto.id]: stockInicial }));
+        //         }
                 
-            })
-            .catch(err => console.error(err));
+        //     })
+        //     .catch(err => console.error(err));
     },[id]);            
 
     return(
