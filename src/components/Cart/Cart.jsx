@@ -1,12 +1,12 @@
 import './Cart.css';
-import { IconButton, Badge } from "@mui/material";
-import CartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../context/context';
 
 function Cart(){
 
-    const {carrito, limpiarCarrito, eliminarProducto} = useAppContext();
+    const {carrito, limpiarCarrito, eliminarProducto, getTotalAmount} = useAppContext();
+
+    let total = getTotalAmount();
 
     return(
         <div className="cart-container">
@@ -26,8 +26,8 @@ function Cart(){
                     })
                 }
             
-                <p className="total-price">Total: ${carrito.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)}</p>
-               
+                <p className="total-price">Total: ${total}</p>
+             
                 <div className="cart-buttons">
                     <button className="limpiar-btn"  onClick={limpiarCarrito}>Limpiar carrito</button>
                     <Link to="/checkout">

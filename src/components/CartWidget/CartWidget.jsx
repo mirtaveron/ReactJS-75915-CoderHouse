@@ -13,7 +13,7 @@ function CartWidget(){
             <Link to="/cart">
                 <IconButton >
                     <Badge badgeContent={carrito.length} color="info" overlap="circular">
-                        <CartIcon onClick={() => console.log(carrito)} className='cart-icon' fontSize="large" />
+                        <CartIcon className='cart-icon' fontSize="large" />
                     </Badge>
                 </IconButton>
             </Link>

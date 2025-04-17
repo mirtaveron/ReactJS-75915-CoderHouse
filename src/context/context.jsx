@@ -30,16 +30,9 @@ export const ContextProvider = (props) => {
        // Actualiza el stock globalmente
         setStockProductos(prev => ({
             ...prev,
-            [producto.id]: (prev[producto.id] || producto.stockInicial) - producto.cantidad
+            [producto.stock]: (prev[producto.stock] || producto.stockInicial) - producto.cantidad
         }));
     }
-
-    const inicializarStock = (id, stockInicial) => {
-        setStocks(prev => ({
-            ...prev,
-            [id]: stockInicial
-        }));
-    };
 
     const limpiarCarrito = () => {
         setCarrito([]);
@@ -50,8 +43,17 @@ export const ContextProvider = (props) => {
         setCarrito(newCarrito);
     };
 
+    const getTotalAmount = () => {
+        let total = carrito.reduce((acc, elemento) => {
+            return acc + Number(elemento.precio) * (elemento.cantidad);
+
+        }, 0);
+    
+        return total;
+      };
+
     return(
-        <AppContext.Provider value={{carrito, agregarAlCarrito, contador, setContador, stockProductos, setStockProductos, limpiarCarrito, eliminarProducto}}>
+        <AppContext.Provider value={{carrito, agregarAlCarrito, contador, setContador, stockProductos, setStockProductos, limpiarCarrito, eliminarProducto, getTotalAmount}}>
             {props.children}
         </AppContext.Provider>
     ) 
